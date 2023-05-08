@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bye Bye UA</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .hero {
+        background-color: navy;
+        color: white;
+        padding: 2em;
+        text-align: center;
+      }
+
+      #countdown {
+        font-size: 6em;
+        text-align: left;
+      }
+
+      #countdown span {
+        display: inline-block;
+        padding: 0.5em;
+        background-color: #ccc;
+      }
+
+      footer {
+        background-color: #f4f4f4;
+        padding: 1em;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <h1>Universal Analytics is going away</h1>
+    </div>
+
+    <div>
+      <p>The event date is: <span id="eventDate"></span></p>
+      <p>timeZone: America/Los_Angeles</p>
+      <p>The countdown to the event is:</p>
+      <p id="countdown"></p>
+      <br>
+      <p>For more information, visit the <a href="https://support.google.com/analytics/answer/11583528?hl=en">Google help center</a>.</p>
+    </div>
+
+    <footer>
+      <p>jerry with GPT</p>
+    </footer>
+
+    <script>
+      // Set the event date to July 1, 2023 at 00:00 in US Western time
+      const eventDate = new Date('2023-07-01T00:00:00-07:00');
+
+      // Display the event date in the desired format
+      const eventDateFormatted = eventDate.toLocaleString('en-US', {
+        timeZone: 'America/Los_Angeles',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      document.getElementById('eventDate').innerHTML = eventDateFormatted;
+
+      // Update the countdown every second
+      setInterval(() => {
+        // Calculate the remaining time until the event
+        const now = new Date();
+        const remainingTime = eventDate - now;
+
+        // Convert the remaining time into days, hours, minutes, and seconds
+        const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+        // Display the remaining time in the desired format
+        const countdown = `
+          <span>${days.toString().padStart(2, '0')}</span>days
+          <span>${hours.toString().padStart(2, '0')}</span>hours
+          <span>${minutes.toString().padStart(2, '0')}</span>min
+          <span>${seconds.toString().padStart(2, '0')}</span>sec
+        `;
+        document.getElementById('countdown').innerHTML = countdown;
+      }, 1000);
+    </script>
+  </body>
+</html>
